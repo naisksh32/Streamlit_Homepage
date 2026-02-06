@@ -3,6 +3,8 @@
 
 import os
 from langchain_anthropic import ChatAnthropic
+import streamlit as st
+from dotenv import load_dotenv
 
 
 # ============================================================================
@@ -20,7 +22,13 @@ _summary_llm: ChatAnthropic | None = None
 
 def _check_api_key() -> str:
     """API 키 확인"""
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    load_dotenv()
+    try:
+        api_key = st.secrets["general"]["API_KEY"] # [general] 섹션 아래에 뒀을 경우
+    # 만약 섹션 없이 바로 API_KEY = "..." 라고 썼다면 st.secrets["API_KEY"] 로 접근
+    except FileNotFoundError:
+        print("Secrets 파일을 찾을 수 없습니다.")
+        api_key = os.environ.get("ANTHROPIC_API_KEY")
     if not api_key:
         raise ValueError(
             "ANTHROPIC_API_KEY 환경변수가 설정되지 않았습니다. "
