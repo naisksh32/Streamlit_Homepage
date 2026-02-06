@@ -24,7 +24,7 @@ def _check_api_key() -> str:
     """API 키 확인"""
     load_dotenv()
     try:
-        api_key = st.secrets["general"]["API_KEY"] # [general] 섹션 아래에 뒀을 경우
+        api_key = st.secrets["general"]["ANTHROPIC_API_KEY"] # [general] 섹션 아래에 뒀을 경우
     # 만약 섹션 없이 바로 API_KEY = "..." 라고 썼다면 st.secrets["API_KEY"] 로 접근
     except FileNotFoundError:
         print("Secrets 파일을 찾을 수 없습니다.")
